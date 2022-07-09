@@ -1,0 +1,4 @@
+flask
+opensearch-py
+requests
+pytest
