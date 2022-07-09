@@ -1,8 +1,18 @@
-from flask import Flask, render_template
-from search import search_client
+from flask import Flask, request, render_template
+from search.client import search_client
 
 app = Flask(__name__)
 
 @app.route("/")
 def hello_world():
-    return render_template('index.html', a_variable=search_client())
+    es = search_client()
+    query = request.args.get('q', '')
+    response = es.search(index='restaurants', body={
+        'query': {
+            'match': {
+                'venue.name': query
+            }
+        }
+    })
+    results = response['hits']['hits']
+    return render_template('index.html', results=results)
