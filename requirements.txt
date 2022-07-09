@@ -1,5 +1,6 @@
 flask
 gunicorn
-opensearch-py
 requests
 pytest
+# Since we use Bonsai and Elastic has forbidden to use non-official distributions starting from 7.14
+elasticsearch==7.13.3
