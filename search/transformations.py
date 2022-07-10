@@ -1,4 +1,16 @@
-def to_frontend(es_response):
+def to_frontend_suggestions(es_response):
+    result = []
+
+    if es_response and 'suggest' in es_response and 'autocomplete' in es_response['suggest']:
+        if es_response['suggest'].get('autocomplete', []):
+            suggestions = es_response['suggest']['autocomplete'][0]
+            for each in suggestions.get('options', []):
+                result.append(each['_source']['title'])
+
+    return result
+
+
+def to_frontend_results(es_response):
     result = []
 
     if es_response and 'hits' in es_response:
@@ -7,7 +19,7 @@ def to_frontend(es_response):
             document = {
                 'image': restaurant['image']['url'],
                 'url': f'https://wolt.com/en/deu/berlin/restaurant/{restaurant["venue"]["slug"]}',
-                'title': restaurant['title'],
+                'title': restaurant['venue']['name'],
                 'subtitle': restaurant['venue']['short_description'],
                 'rating': '😅'
             }

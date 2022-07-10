@@ -55,13 +55,11 @@ const inputListener = inputEl.addEventListener("input", (event) => {
 
   // Fetch autocomplete items and push them to `autocomplete-list`
   console.log("search: ", value);
-  /* TODO: add BE integration
-  fetch(url)
+  fetch(`/autocomplete?q=${value}`)
     .then(response => response.json())
     .then(data => {
       console.log(data);
     });
-  */
 }, false)
 
 const listListener = listEl.addEventListener("click", (event) => {

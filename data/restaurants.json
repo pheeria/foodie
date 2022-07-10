@@ -1,5 +1,118 @@
 {
     "settings": {
-        "index.refresh_interval": "5s"
+        "analysis": {
+            "analyzer": {
+                "bigram": {
+                    "type": "custom",
+                    "tokenizer": "standard",
+                    "filter": [
+                        "lowercase",
+                        "asciifolding",
+                        "shingle"
+                    ]
+                }
+            }
+        }
+    },
+    "mappings": {
+        "properties": {
+            "suggest": {
+                "type": "completion",
+                "fields": {
+                    "bigrams": {
+                        "type": "text",
+                        "analyzer": "bigram"
+                    },
+                    "text": {
+                        "type": "text",
+                        "analyzer": "english"
+                    }
+                }
+            },
+            "venue": {
+                "properties": {
+                    "badges": {
+                        "properties": {
+                            "text": {
+                                "type": "text",
+                                "fields": {
+                                    "keyword": {
+                                        "type": "keyword",
+                                        "ignore_above": 256
+                                    }
+                                }
+                            },
+                            "variant": {
+                                "type": "text",
+                                "fields": {
+                                    "keyword": {
+                                        "type": "keyword",
+                                        "ignore_above": 256
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "franchise": {
+                        "type": "text",
+                        "fields": {
+                            "keyword": {
+                                "type": "keyword",
+                                "ignore_above": 256
+                            }
+                        }
+                    },
+                    "name": {
+                        "type": "text",
+                        "analyzer": "english",
+                        "fields": {
+                            "keyword": {
+                                "type": "keyword",
+                                "ignore_above": 256
+                            }
+                        }
+                    },
+                    "product_line": {
+                        "type": "text",
+                        "analyzer": "english",
+                        "fields": {
+                            "keyword": {
+                                "type": "keyword",
+                                "ignore_above": 256
+                            }
+                        }
+                    },
+                    "short_description": {
+                        "type": "text",
+                        "analyzer": "english",
+                        "fields": {
+                            "keyword": {
+                                "type": "keyword",
+                                "ignore_above": 256
+                            }
+                        }
+                    },
+                    "slug": {
+                        "type": "text",
+                        "fields": {
+                            "keyword": {
+                                "type": "keyword",
+                                "ignore_above": 256
+                            }
+                        }
+                    },
+                    "tags": {
+                        "type": "text",
+                        "analyzer": "english",
+                        "fields": {
+                            "keyword": {
+                                "type": "keyword",
+                                "ignore_above": 256
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

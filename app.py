@@ -1,6 +1,7 @@
-from flask import Flask, request, render_template
+from flask import Flask, render_template, request, jsonify
+
 from search.client import search_client
-from search.transformations import to_frontend
+from search.transformations import to_frontend_results, to_frontend_suggestions
 
 app = Flask(__name__)
 
@@ -9,15 +10,20 @@ def autocomplete():
     es = search_client()
     query = request.args.get('q', '')
     response = es.search(index='restaurants', body={
-        'query': {
-            'match': {
-                'venue.name': query
+        'suggest': {
+            'autocomplete': {
+                'prefix': query,
+                'completion': {
+                    'field': 'suggest',
+                    'skip_duplicates': True,
+                }
             }
-        }
+        },
+        '_source': 'title'
     })
 
-    results = to_frontend(response)
-    return render_template('index.html', results=results)
+    return jsonify(to_frontend_suggestions(response))
+
 
 @app.route("/")
 def index():
@@ -31,5 +37,5 @@ def index():
         }
     })
 
-    results = to_frontend(response)
+    results = to_frontend_results(response)
     return render_template('index.html', results=results)

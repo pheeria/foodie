@@ -31,7 +31,9 @@ def index_restaurants():
                 if section['name'] == 'restaurants-delivering-venues':
                     items = section['items']
             for venue in items:
-                documents.append({'_index': 'restaurants', '_id': venue['venue']['id'], '_source': venue})
+                document = {'_index': 'restaurants', '_id': venue['venue']['id'], '_source': venue}
+                document['_source']['suggest'] = venue['title']
+                documents.append(document)
         bulk(es, documents)
         
 
