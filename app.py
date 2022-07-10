@@ -38,4 +38,4 @@ def index():
     })
 
     results = to_frontend_results(response)
-    return render_template("index.html", results=results)
+    return render_template("index.html", query=query, results=results)
