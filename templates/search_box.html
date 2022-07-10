@@ -20,23 +20,15 @@
 const LIST_ITEM_CLASS = "p-1 cursor-pointer hover:bg-slate-50";
 const inputEl = document.getElementById("autocomplete-input");
 const listEl = document.getElementById("autocomplete-list");
-const formEl = document.getElementById("autocomplete-form");
 
-const loadingEl = document.createElement('li');
-loadingEl.className = LIST_ITEM_CLASS;
-loadingEl.appendChild(document.createTextNode("Loading..."));
-
+const controller = new AbortController();
+const { signal } = controller;
+  
 const inputListener = inputEl.addEventListener("input", (event) => {
   const value = event.target.value;
   if(value.length < 3) {
     return;
   }
-
-  // Clear list and add loading message
-  while (listEl.lastChild) {
-    listEl.removeChild(listEl.lastChild);
-  }
-  listEl.appendChild(loadingEl);
 
   // Fetch autocomplete items and push them to `autocomplete-list`
   console.log("search: ", value);
@@ -58,16 +50,5 @@ const inputListener = inputEl.addEventListener("input", (event) => {
         });
     });
 }, false)
-
-<!-- const listListener = listEl.addEventListener("click", (event) => { -->
-<!--   if(event.target.tagName === "LI") { -->
-<!--     const value = event.target.innerText; -->
-<!--     inputEl.value = value; -->
-
-<!--     while (listEl.lastChild) { -->
-<!--       listEl.removeChild(listEl.lastChild); -->
-<!--     } -->
-<!--   } -->
-<!-- }, false); -->
 </script>
 
