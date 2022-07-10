@@ -14,5 +14,5 @@ def hello_world():
             }
         }
     })
-    results = response['hits']['hits']
-    return render_template('index.html', results=results)
+    results = map(lambda each: each['_source'], response['hits']['hits'])
+    return render_template('index.html', results=list(results))

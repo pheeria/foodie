@@ -2,14 +2,18 @@
 
 {% block content %}
 
+{% for restaurant in results %}
 <div class="max-w-4xl p-6 flex flex-wrap justify-center gap-6">
 	<div class="h-max rounded-lg overflow-hidden drop-shadow-lg bg-white hover:scale-105 transition-transform">
 		<div class="w-48 h-24 bg-gradient-to-r from-sky-500 to-indigo-500"></div>
 		<div class="px-4 py-2">
-			<h2 class="text-xl text-slate-700 font-bold">Card title</h2>
-            <p class="text-sm text-slate-700">{{ results }}</p>
-		<div>
+            <h2 class="text-xl text-slate-700 font-bold">{{ restaurant.title }}</h2>
+            <p class="text-sm text-slate-700">{{ restaurant.venue.short_description }}</p>
+		</div>
 	</div>
 </div>
+{% endfor %}
 
+<script>console.log("{{results}}")</script>
 {% endblock content %}
+
