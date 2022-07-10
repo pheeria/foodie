@@ -8,18 +8,18 @@ app = Flask(__name__)
 @app.route("/autocomplete")
 def autocomplete():
     es = search_client()
-    query = request.args.get('q', '')
-    response = es.search(index='restaurants', body={
-        'suggest': {
-            'autocomplete': {
-                'prefix': query,
-                'completion': {
-                    'field': 'suggest',
-                    'skip_duplicates': True,
+    query = request.args.get("q", "")
+    response = es.search(index="restaurants", body={
+        "suggest": {
+            "autocomplete": {
+                "prefix": query,
+                "completion": {
+                    "field": "suggest",
+                    "skip_duplicates": True,
                 }
             }
         },
-        '_source': 'title'
+        "_source": "title"
     })
 
     return jsonify(to_frontend_suggestions(response))
@@ -28,14 +28,14 @@ def autocomplete():
 @app.route("/")
 def index():
     es = search_client()
-    query = request.args.get('q', '')
-    response = es.search(index='restaurants', body={
-        'query': {
-            'match': {
-                'venue.name': query
+    query = request.args.get("q", "")
+    response = es.search(index="restaurants", body={
+        "query": {
+            "match": {
+                "venue.name": query
             }
         }
     })
 
     results = to_frontend_results(response)
-    return render_template('index.html', results=results)
+    return render_template("index.html", results=results)
