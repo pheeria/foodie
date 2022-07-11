@@ -29,13 +29,17 @@ def autocomplete():
 def index():
     es = search_client()
     query = request.args.get("q", "")
-    response = es.search(index="restaurants", body={
-        "query": {
-            "match": {
-                "venue.name": query
+    if query:
+        response = es.search_template(index="restaurants", body={
+            "id": "all_text_fields",
+            "params": {
+                "query": query
             }
-        }
-    })
+        })
+    else:
+        response = es.search_template(index="restaurants", body={
+            "id": "all_results"
+        })
 
     results = to_frontend_results(response)
     return render_template("index.html", query=query, results=results)

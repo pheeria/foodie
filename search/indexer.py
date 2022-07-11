@@ -5,9 +5,18 @@ from elasticsearch.helpers import bulk
 
 current_directory = os.path.dirname(__file__)
 
+def create_templates():
+    es = search_client()
+    templates = ["all_results", "naive", "all_text_fields"]
+    for template in templates:
+        absolute_path = os.path.join(current_directory, f"./elastic/{template}.json")
+        with open(absolute_path) as file:
+            template_json = json.load(file)
+            es.put_script(id=template, body=template_json)
+
 def create_index():
     es = search_client()
-    relative_filepath = "../data/restaurants.json"
+    relative_filepath = "./elastic/restaurants.json"
     absolute_filepath = os.path.join(current_directory, relative_filepath)
     with open(absolute_filepath) as file:
         settings = json.load(file)
@@ -40,3 +49,4 @@ if __name__ == "__main__":
     delete_index()
     create_index()
     index_restaurants()
+    create_templates()
