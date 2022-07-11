@@ -41,7 +41,9 @@ def index_restaurants():
                     items = section["items"]
             for venue in items:
                 document = {"_index": "restaurants", "_id": venue["venue"]["id"], "_source": venue}
-                document["_source"]["suggest"] = venue["title"]
+                document["_source"]["suggest"] = [venue["title"]]
+                for tag in venue["venue"]["tags"]:
+                    document["_source"]["suggest"].append(tag)
                 documents.append(document)
         bulk(es, documents)
         

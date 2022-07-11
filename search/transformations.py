@@ -5,7 +5,7 @@ def to_frontend_suggestions(es_response):
         if es_response["suggest"].get("autocomplete", []):
             suggestions = es_response["suggest"]["autocomplete"][0]
             for each in suggestions.get("options", []):
-                result.append(each["_source"]["title"])
+                result.append(each["text"])
 
     return result
 
