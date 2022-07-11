@@ -5,7 +5,7 @@
     <h2 class="sr-only">Restaurants</h2>
     <div class="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
     {% for restaurant in results %}
-        <a href="{{ restaurant.url }}" target="_blank" class="group">
+        <a href="{{ restaurant.url }}" target="_blank" class="group" onclick="track('{{ query }}', '{{ restaurant.id }}', {{ loop.index }}, {{ results }})">
             <div class="w-full aspect-w-1 aspect-h-1 bg-gray-200 rounded-lg overflow-hidden xl:aspect-w-7 xl:aspect-h-8">
                 <img src="{{restaurant.image}}" alt="{{ restaurant.title }}" class="w-full h-full object-center object-cover group-hover:opacity-75">
             </div>
@@ -20,5 +20,16 @@
     {% endfor %}
     </div>
 </div>
+
+<script>
+    function track(query, restaurant, position, results) {
+            console.log({
+                    query,
+                    restaurant,
+                    position,
+                    shown_restaurants: results.map(r => r.id)
+            });
+    }
+</script>
 {% endblock content %}
 

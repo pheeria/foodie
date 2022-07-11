@@ -17,6 +17,7 @@ def to_frontend_results(es_response):
         for each in es_response["hits"].get("hits", []):
             restaurant = each["_source"]
             document = {
+                "id": restaurant["venue"]["id"],
                 "image": restaurant["image"]["url"],
                 "url": f'https://wolt.com/en/deu/berlin/restaurant/{restaurant["venue"]["slug"]}',
                 "title": restaurant["venue"]["name"],
