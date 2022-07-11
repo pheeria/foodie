@@ -1,0 +1,23 @@
+{
+    "script": {
+        "lang": "mustache",
+        "source": {
+            "size": 20,
+            "query": {
+                "query_string": {
+                    "query": "{{query}}",
+                    "fields": [
+                        "title^100",
+                        "venue.name^100",
+                        "venue.short_description^50",
+                        "filtering.filters.values.keyword^10",
+                        "venue.tags.keyword^10"
+                    ]
+                }
+            }
+        },
+        "params": {
+            "query": ""
+        }
+    }
+}

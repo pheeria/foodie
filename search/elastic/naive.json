@@ -1,0 +1,16 @@
+{
+    "script": {
+        "lang": "mustache",
+        "source": {
+            "size": 20,
+            "query": {
+                "match": {
+                    "venue.name": "{{query}}"
+                }
+            }
+        },
+        "params": {
+            "query": ""
+        }
+    }
+}
