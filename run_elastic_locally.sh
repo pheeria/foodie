@@ -5,8 +5,8 @@ function cleanup {
     docker rm /elasticsearch
 }
 
-echo "pulling elasticsearch:8.3.3 image";
-docker pull docker.elastic.co/elasticsearch/elasticsearch:8.3.3;
+echo "pulling elasticsearch:7.13.3 image";
+docker pull docker.elastic.co/elasticsearch/elasticsearch:7.13.3;
 
 echo "creating docker network for elastic and kibana"
 # create if not exists

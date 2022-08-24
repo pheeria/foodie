@@ -32,12 +32,6 @@ and in the separate terminal
 python search/indexer.py
 ```
 
-4.2. Setup local Elasticsearch (or similar) and index the documents
-```sh
-python search/indexer.py
-```
-
-
 ## FAQ
 
 > Where did you get the data from?
