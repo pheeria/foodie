@@ -9,7 +9,21 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-2. Setup elastic search
+2. Local development
+```sh
+export FLASK_ENV=development
+flask run --port 4200
+```
+
+3. Setup Bonsai Elasticsearch (or similar) and index the documents
+```sh
+export BONSAI_URL=https://user:password@bonsai-domain.io:port
+python search/indexer.py
+```
+
+4. Alternatively you can use local Elastisearch in the docker 
+
+4.1. Setup elastic search
 ```sh
 bash run_elastic.sh
 ```
@@ -18,10 +32,9 @@ and in the separate terminal
 python search/indexer.py
 ```
 
-3. Local development
+4.2. Setup local Elasticsearch (or similar) and index the documents
 ```sh
-export FLASK_ENV=development
-flask run --port 4200
+python search/indexer.py
 ```
 
 
