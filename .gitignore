@@ -130,3 +130,6 @@ dmypy.json
 
 # kaggle datasets
 datasets/
+
+.vscode
+.DS_Store

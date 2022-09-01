@@ -21,6 +21,17 @@ export BONSAI_URL=https://user:password@bonsai-domain.io:port
 python search/indexer.py
 ```
 
+4. Alternatively you can use local Elastisearch in the docker 
+
+4.1. Setup elastic search
+```sh
+bash run_elastic.sh
+```
+and in the separate terminal
+```sh
+python search/indexer.py
+```
+
 ## FAQ
 
 > Where did you get the data from?

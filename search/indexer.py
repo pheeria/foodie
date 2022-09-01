@@ -5,6 +5,7 @@ from elasticsearch.helpers import bulk
 
 current_directory = os.path.dirname(__file__)
 
+
 def create_templates():
     es = search_client()
     templates = ["all_results", "naive", "all_text_fields"]
@@ -14,6 +15,7 @@ def create_templates():
             template_json = json.load(file)
             es.put_script(id=template, body=template_json)
 
+
 def create_index():
     es = search_client()
     relative_filepath = "./elastic/restaurants.json"
@@ -22,9 +24,11 @@ def create_index():
         settings = json.load(file)
         es.indices.create(index="restaurants", body=settings)
 
+
 def delete_index():
     es = search_client()
-    es.indices.delete(index="restaurants")
+    es.options(ignore_status=[400, 404]).indices.delete(index="restaurants")
+
 
 def index_restaurants():
     es = search_client()
@@ -40,13 +44,18 @@ def index_restaurants():
                 if section["name"] == "restaurants-delivering-venues":
                     items = section["items"]
             for venue in items:
-                document = {"_index": "restaurants", "_id": venue["venue"]["id"], "_source": venue}
+                document = {
+                    "_index": "restaurants",
+                    "_id": venue["venue"]["id"],
+                    "_source": venue,
+                }
                 document["_source"]["suggest"] = [venue["title"]]
                 for tag in venue["venue"]["tags"]:
                     document["_source"]["suggest"].append(tag)
                 documents.append(document)
         bulk(es, documents)
-        
+
+
 if __name__ == "__main__":
     delete_index()
     create_index()
